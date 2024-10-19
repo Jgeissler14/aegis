@@ -10,17 +10,27 @@ import (
 
 var (
 	// Used for flags.
-	cfgFile     string
-	userLicense string
+	cfgFile string
 
 	rootCmd = &cobra.Command{
-		Use:   "cobra-cli",
-		Short: "A generator for Cobra based Applications",
-		Long: `Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+		Use:   "aegis",
+		Short: "A secure and automated backup CLI built in Go for seamless data protection.",
+		Long: `Aegis is a Golang-powered CLI tool designed for automating backups of files, 
+directories, and cloud resources. With Aegis, users can securely store and manage backups, 
+handle multiple backup versions, and restore data effortlessly. Featuring encryption, 
+cloud integration, and customizable retention policies, Aegis ensures that your critical data 
+remains safe and accessible with minimal effort.`,
 	}
 )
+
+var versionCmd = &cobra.Command{
+	Use:   "version",
+	Short: "Print the version number of Aegis",
+	Long:  `All software has versions. This is Aegis'`,
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("Aegis v0.1")
+	},
+}
 
 // Execute executes the root command.
 func Execute() error {
@@ -30,17 +40,10 @@ func Execute() error {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.cobra.yaml)")
-	rootCmd.PersistentFlags().StringP("author", "a", "YOUR NAME", "author name for copyright attribution")
-	rootCmd.PersistentFlags().StringVarP(&userLicense, "license", "l", "", "name of license for the project")
-	rootCmd.PersistentFlags().Bool("viper", true, "use Viper for configuration")
-	viper.BindPFlag("author", rootCmd.PersistentFlags().Lookup("author"))
-	viper.BindPFlag("useViper", rootCmd.PersistentFlags().Lookup("viper"))
-	viper.SetDefault("author", "NAME HERE <EMAIL ADDRESS>")
-	viper.SetDefault("license", "apache")
+	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.cobra.yaml)")
+	// viper.SetDefault("license", "apache")
 
-	rootCmd.AddCommand(addCmd)
-	rootCmd.AddCommand(initCmd)
+	rootCmd.AddCommand(versionCmd)
 }
 
 func initConfig() {
