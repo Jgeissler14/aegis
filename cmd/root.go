@@ -11,6 +11,7 @@ import (
 var (
 	// Used for flags.
 	cfgFile string
+	Verbose bool
 
 	rootCmd = &cobra.Command{
 		Use:   "aegis",
@@ -40,10 +41,10 @@ func Execute() error {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.cobra.yaml)")
-	// viper.SetDefault("license", "apache")
+	rootCmd.PersistentFlags().BoolVarP(&Verbose, "verbose", "v", false, "verbose output")
 
 	rootCmd.AddCommand(versionCmd)
+	rootCmd.AddCommand(backupCmd)
 }
 
 func initConfig() {
