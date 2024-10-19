@@ -10,6 +10,7 @@ import (
 var (
 	source string
 	target string
+	zip    bool
 )
 
 var backupCmd = &cobra.Command{
@@ -21,6 +22,9 @@ var backupCmd = &cobra.Command{
 			os.Exit(1)
 		}
 		fmt.Printf("Starting backup...\nSource: %s\nTarget: %s\n", source, target)
+		if zip {
+			fmt.Printf("Zipping Files...\n")
+		}
 
 		files, err := os.Open(source)
 		if err != nil {
@@ -45,6 +49,7 @@ func init() {
 	// Add flags for the backup command
 	backupCmd.Flags().StringVarP(&source, "source", "s", "", "Source directory to backup")
 	backupCmd.Flags().StringVarP(&target, "target", "t", "", "Target location for the backup")
+	backupCmd.Flags().BoolVarP(&zip, "zip", "z", false, "Zip the source before backup")
 
 	// Mark --source and --target as required
 	backupCmd.MarkFlagRequired("source")
