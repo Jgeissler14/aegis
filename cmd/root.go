@@ -44,7 +44,6 @@ func init() {
 	rootCmd.PersistentFlags().BoolVarP(&Verbose, "verbose", "v", false, "verbose output")
 
 	rootCmd.AddCommand(versionCmd)
-	rootCmd.AddCommand(backupCmd)
 }
 
 func initConfig() {
